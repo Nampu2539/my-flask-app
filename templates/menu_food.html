@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Food - HealthyCal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}" class="logo">HealthyCal</a>
+        <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('menu_food') }}" class="active">Menu Food</a>
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container-menu">
+        <h1>Menu Food</h1>
+        <p class="description">Explore our curated selection of healthy meals and fruits designed to support your fitness journey.</p>
+
+        <!-- Meals Section -->
+        <h2 class="section-heading">Healthy Meals</h2>
+        <div class="menu-grid">
+            {% for meal in meals %}
+            <div class="menu-card">
+                <img src="{{ url_for('static', filename='/css/imagesfood/' + meal['image']) }}" alt="{{ meal['name'] }}">
+                <h3>{{ meal['name'] }}</h3>
+                <a href="{{ url_for('details', category='meal', item_id=meal['meal_id']) }}" class="btn">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Fruits Section -->
+        <h2 class="section-heading">Healthy Fruits</h2>
+        <div class="menu-grid">
+            {% for fruit in fruits %}
+            <div class="menu-card">
+                <img src="{{ url_for('static', filename='/css/imagesfruit/' + fruit['image']) }}" alt="{{ fruit['name'] }}">
+                <h3>{{ fruit['name'] }}</h3>
+                <a href="{{ url_for('details', category='fruit', item_id=fruit['fruit_id']) }}" class="btn">View Details</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 HealthyCal. All rights reserved.</p>
+    </footer>
+</body>
+</html>
